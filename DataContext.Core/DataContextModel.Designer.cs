@@ -38,7 +38,7 @@ namespace DataContext.Core
         /// </summary>
         public DataContextModelContainer() : base("name=DataContextModelContainer", "DataContextModelContainer")
         {
-            this.ContextOptions.LazyLoadingEnabled = true;
+            this.ContextOptions.LazyLoadingEnabled = false;
             OnContextCreated();
         }
     
@@ -47,7 +47,7 @@ namespace DataContext.Core
         /// </summary>
         public DataContextModelContainer(string connectionString) : base(connectionString, "DataContextModelContainer")
         {
-            this.ContextOptions.LazyLoadingEnabled = true;
+            this.ContextOptions.LazyLoadingEnabled = false;
             OnContextCreated();
         }
     
@@ -56,7 +56,7 @@ namespace DataContext.Core
         /// </summary>
         public DataContextModelContainer(EntityConnection connection) : base(connection, "DataContextModelContainer")
         {
-            this.ContextOptions.LazyLoadingEnabled = true;
+            this.ContextOptions.LazyLoadingEnabled = false;
             OnContextCreated();
         }
     

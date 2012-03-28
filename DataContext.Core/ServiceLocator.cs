@@ -9,10 +9,10 @@
 
         public ServiceLocator()
         {
-            SetupContainer();           
+            SetupContainerWithContext();           
         }
 
-        private void SetupContainer()
+        private void SetupContainerWithContext()
         {
             var containerBuilder = new ContainerBuilder();
 
@@ -20,18 +20,16 @@
 
             containerBuilder.RegisterAssemblyTypes(currentAssembly).AsImplementedInterfaces();
 
-            _container = containerBuilder.Build();
+            var currentContext = GetCurrentContext();
+            containerBuilder.RegisterInstance(currentContext);
 
-            BindContext();
-
+            _container = containerBuilder.Build();            
         }
 
-        protected virtual void BindContext()
+        private CurrentContext GetCurrentContext()
         {
             var realContextId = 0; // or read settings / registry...
-            var currentContext = new CurrentContext(realContextId); 
-
-            RebindToConstant(currentContext);
+            return new CurrentContext(realContextId);            
         }
 
         public T Resolve<T>()

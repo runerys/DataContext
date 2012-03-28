@@ -49,7 +49,7 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="DataContextModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
-        <EntityContainer Name="DataContextModelContainer" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="DataContextModelContainer" annotation:LazyLoadingEnabled="false">
           <EntitySet Name="Contexts" EntityType="DataContextModel.Context" />
           <EntitySet Name="People" EntityType="DataContextModel.Person" />
           <AssociationSet Name="ContextPerson" Association="DataContextModel.ContextPerson">
