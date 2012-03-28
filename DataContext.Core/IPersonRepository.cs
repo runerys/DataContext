@@ -4,7 +4,7 @@ namespace DataContext.Core
 
     public interface IPersonRepository
     {
-        List<Person> GetByFirstName(string firstname);
+        List<Person> WithFirstName(string firstname);
 
         void Save(Person person);
 

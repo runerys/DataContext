@@ -20,17 +20,19 @@ namespace DataContext.IntegrationTests
             // Arrange
             using (var entities = new DataContextModelContainer())
             {
-                var currentContext = entities.Contexts.CreateObject();
-                currentContext.Name = "Testcontext 1234";
-                currentContext.IsTest = true;
-                currentContext.DateCreated = DateTime.Now;
+                var currentContext = new Context
+                    {
+                        Name = "Testcontext 1234",
+                        IsTest = true, 
+                        DateCreated = DateTime.Now
+                    };
 
-                entities.AddToContexts(currentContext);
+                entities.Contexts.AddObject(currentContext);
 
                 var person = new Person { FirstName = "Rune", LastName = "Rystad" };
                 person.ContextId = currentContext.Id;
 
-                entities.AddToPeople(person);
+                entities.People.AddObject(person);
                 entities.SaveChanges();
 
                 contextId = currentContext.Id;

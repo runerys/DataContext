@@ -14,7 +14,7 @@ namespace DataContext.Core
             this.context = context;
         }
 
-        public List<Person> GetByFirstName(string firstname)
+        public List<Person> WithFirstName(string firstname)
         {
             using (var model = new DataContextModelContainer())
             {

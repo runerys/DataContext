@@ -3,11 +3,11 @@
     using System.Reflection;
     using Autofac;
 
-    public class AutofacServiceLocator : IServiceLocator
+    public class ServiceLocator : IServiceLocator
     {
         private IContainer _container;
 
-        public AutofacServiceLocator()
+        public ServiceLocator()
         {
             SetupContainer();           
         }
@@ -18,7 +18,17 @@
             containerBuilder.RegisterAssemblyTypes(Assembly.GetAssembly(this.GetType())).AsImplementedInterfaces();
             _container = containerBuilder.Build();
 
+            BindContext();
+
             ApplySpecialBindings();
+        }
+
+        private void BindContext()
+        {
+            // Real context = 0
+            var currentContext = new CurrentContext(0); // or read settings / registry...
+
+            RebindToConstant(currentContext);
         }
 
         protected virtual void ApplySpecialBindings() { }

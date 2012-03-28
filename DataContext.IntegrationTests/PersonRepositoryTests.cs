@@ -10,7 +10,7 @@ namespace DataContext.IntegrationTests
     using NUnit.Framework;
 
     [TestFixture]
-    public class PersonRepositoryTests : SetupAndTearDown<AutofacServiceLocator>
+    public class PersonRepositoryTests : SetupAndTearDown<ServiceLocator>
     {
         [Test]
         public void GivenPerson_WhenSearching_IsAbleToFindHim()
@@ -26,8 +26,8 @@ namespace DataContext.IntegrationTests
             }
 
             // Act
-            var repository = ServiceLocator.Resolve<IPersonRepository>();
-            var people = repository.GetByFirstName("Rune");
+            var persons = ServiceLocator.Resolve<IPersonRepository>();
+            var people = persons.WithFirstName("Rune");
            
             // Assert
             Assert.AreEqual(1, people.Count());
@@ -48,8 +48,8 @@ namespace DataContext.IntegrationTests
             }
 
             // Act
-            var repository = ServiceLocator.Resolve<IPersonRepository>();
-            var people = repository.GetByFirstName("Rune");
+            var persons = ServiceLocator.Resolve<IPersonRepository>();
+            var people = persons.WithFirstName("Rune");
 
             // Assert
             Assert.AreEqual(1, people.Count());
@@ -59,15 +59,15 @@ namespace DataContext.IntegrationTests
         [Test]
         public void GivenEmptyContext_WhenCreatingANewPersonAndSearching_IsAbleToFindHim()
         {
-            var repository = ServiceLocator.Resolve<IPersonRepository>();
+            var persons = ServiceLocator.Resolve<IPersonRepository>();
 
             var person = new Person();
             person.FirstName = "Rune";
             person.LastName = "Rystad";
 
-            repository.Save(person);
+            persons.Save(person);
 
-            var people = repository.GetByFirstName("Rune");
+            var people = persons.WithFirstName("Rune");
 
             Assert.AreEqual(1, people.Count());
             Assert.AreEqual("Rystad", people.First().LastName);
@@ -79,21 +79,21 @@ namespace DataContext.IntegrationTests
     {
         protected IServiceLocator ServiceLocator { get; private set; }
 
-        protected CurrentContext CurrentContext { get; private set; }
+        protected CurrentContext CurrentContext { get; private set; }       
 
         [SetUp]
         public void Setup()
         {
             ServiceLocator = new TServiceLocator();
 
-            CreateNewContext();
+            this.CreateAndBindNewContext();
         }
 
-        private void CreateNewContext()
+        private void CreateAndBindNewContext()
         {
             using (var entities = new DataContextModelContainer())
             {
-                var currentContext = entities.Contexts.CreateObject();
+                var currentContext = new Context();
                 currentContext.Name = "Testcontext 1234";
                 currentContext.IsTest = true;
                 currentContext.DateCreated = DateTime.Now;
