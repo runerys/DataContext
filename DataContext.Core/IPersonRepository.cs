@@ -7,6 +7,5 @@ namespace DataContext.Core
         List<Person> WithFirstName(string firstname);
 
         void Save(Person person);
-
     }
 }

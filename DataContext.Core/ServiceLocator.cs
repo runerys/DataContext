@@ -15,23 +15,24 @@
         private void SetupContainer()
         {
             var containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterAssemblyTypes(Assembly.GetAssembly(this.GetType())).AsImplementedInterfaces();
+
+            var currentAssembly = Assembly.GetAssembly(this.GetType());
+
+            containerBuilder.RegisterAssemblyTypes(currentAssembly).AsImplementedInterfaces();
+
             _container = containerBuilder.Build();
 
             BindContext();
 
-            ApplySpecialBindings();
         }
 
-        private void BindContext()
+        protected virtual void BindContext()
         {
-            // Real context = 0
-            var currentContext = new CurrentContext(0); // or read settings / registry...
+            var realContextId = 0; // or read settings / registry...
+            var currentContext = new CurrentContext(realContextId); 
 
             RebindToConstant(currentContext);
         }
-
-        protected virtual void ApplySpecialBindings() { }
 
         public T Resolve<T>()
         {

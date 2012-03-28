@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using DataContext.Core;
+using NUnit.Framework;
 
 namespace DataContext.IntegrationTests
 {
-    using DataContext.Core;
-
-    using NUnit.Framework;
-
     [TestFixture]
     public class PersonRepositoryTests : SetupAndTearDown<ServiceLocator>
     {
@@ -21,7 +17,7 @@ namespace DataContext.IntegrationTests
                 var person = new Person { FirstName = "Rune", LastName = "Rystad" };
                 person.ContextId = CurrentContext.Id;
 
-                entities.AddToPeople(person);
+                entities.People.AddObject(person);
                 entities.SaveChanges();
             }
 
@@ -43,7 +39,7 @@ namespace DataContext.IntegrationTests
                 var person = new Person { FirstName = "Rune", LastName = "Rudberg" };
                 person.ContextId = CurrentContext.Id;
 
-                entities.AddToPeople(person);
+                entities.People.AddObject(person);
                 entities.SaveChanges();
             }
 
@@ -86,15 +82,15 @@ namespace DataContext.IntegrationTests
         {
             ServiceLocator = new TServiceLocator();
 
-            this.CreateAndBindNewContext();
+            this.CreateAndRebindContext();
         }
 
-        private void CreateAndBindNewContext()
+        private void CreateAndRebindContext()
         {
             using (var entities = new DataContextModelContainer())
             {
                 var currentContext = new Context();
-                currentContext.Name = "Testcontext 1234";
+                currentContext.Name = string.Format("Testcontext {0:u}", DateTime.UtcNow);
                 currentContext.IsTest = true;
                 currentContext.DateCreated = DateTime.Now;
 

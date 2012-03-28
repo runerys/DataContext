@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace DataContext.IntegrationTests
 {
@@ -59,17 +57,17 @@ namespace DataContext.IntegrationTests
             // Arrange
             using (var entities = new DataContextModelContainer())
             {
-                var currentContext = entities.Contexts.CreateObject();
+                var currentContext = new Context();
                 currentContext.Name = "Testcontext 1234";
                 currentContext.IsTest = true;
                 currentContext.DateCreated = DateTime.Now;
 
-                entities.AddToContexts(currentContext);
+                entities.Contexts.AddObject(currentContext);
 
                 var person = new Person { FirstName = "Rune", LastName = "Rudberg" };
                 person.ContextId = currentContext.Id;
 
-                entities.AddToPeople(person);
+                entities.People.AddObject(person);
                 entities.SaveChanges();
 
                 contextId = currentContext.Id;
