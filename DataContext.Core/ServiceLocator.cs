@@ -1,5 +1,6 @@
 ﻿namespace DataContext.Core
 {
+    using System;
     using System.Reflection;
     using Autofac;
 
@@ -41,6 +42,20 @@
         {
             var builder = new ContainerBuilder();
             builder.RegisterInstance(instance);
+            builder.Update(_container);
+        }
+
+        public void Rebind<TInterface>(Type type)
+        {
+            var builder = new ContainerBuilder();
+            builder.RegisterType(type).As<TInterface>();
+            builder.Update(_container);
+        }
+
+        public void Register(Type type)
+        {
+            var builder = new ContainerBuilder();
+            builder.RegisterType(type);
             builder.Update(_container);
         }
     }

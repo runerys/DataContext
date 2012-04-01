@@ -133,7 +133,7 @@
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram Name="DataContextModel" ZoomLevel="297" >
+      <Diagram Name="DataContextModel" ZoomLevel="168" >
         <EntityTypeShape EntityType="DataContextModel.Context" Width="1.5" PointX="4" PointY="1.25" Height="1.787985026041667" />
         <EntityTypeShape EntityType="DataContextModel.Person" Width="1.5" PointX="7" PointY="1.25" Height="1.787985026041667" />
         <AssociationConnector Association="DataContextModel.ContextPerson">

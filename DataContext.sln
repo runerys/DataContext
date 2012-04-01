@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataContext.Core", "DataContext.Core\DataContext.Core.csproj", "{816FAA07-1287-4C2F-A74E-4203D1404133}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C98280DA-A12F-4DA6-879C-84EEFBB17E2D}"
+	ProjectSection(SolutionItems) = preProject
+		README = README
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataContext.IntegrationTests", "DataContext.IntegrationTests\DataContext.IntegrationTests.csproj", "{BE755C98-D50A-41AA-BE92-BC3AD1FA1C5E}"
 EndProject

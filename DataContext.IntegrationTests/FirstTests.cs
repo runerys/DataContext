@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Linq;
+using DataContext.Core;
+using NUnit.Framework;
 
 namespace DataContext.IntegrationTests
 {
-    using DataContext.Core;
-
-    using NUnit.Framework;
-
     [TestFixture]
     public class FirstTests
     {
@@ -26,10 +24,9 @@ namespace DataContext.IntegrationTests
                     };
 
                 entities.Contexts.AddObject(currentContext);
-
+                
                 var person = new Person { FirstName = "Rune", LastName = "Rystad" };
                 person.ContextId = currentContext.Id;
-
                 entities.People.AddObject(person);
                 entities.SaveChanges();
 
@@ -42,7 +39,6 @@ namespace DataContext.IntegrationTests
                 var people = from p in search.People 
                              where p.FirstName == "Rune" && p.ContextId == contextId 
                              select p;
-
                 // Assert
                 Assert.AreEqual(1, people.Count());
                 Assert.AreEqual("Rystad", people.First().LastName);
@@ -61,9 +57,8 @@ namespace DataContext.IntegrationTests
                 currentContext.Name = "Testcontext 1234";
                 currentContext.IsTest = true;
                 currentContext.DateCreated = DateTime.Now;
-
                 entities.Contexts.AddObject(currentContext);
-
+                
                 var person = new Person { FirstName = "Rune", LastName = "Rudberg" };
                 person.ContextId = currentContext.Id;
 

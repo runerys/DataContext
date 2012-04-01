@@ -6,12 +6,13 @@ using NUnit.Framework;
 namespace DataContext.IntegrationTests
 {
     [TestFixture]
-    public class PersonRepositoryTests : SetupAndTearDown<ServiceLocator>
+    public class PersonRepositoryWithContextAwareModelTests : SetupAndTearDown<ServiceLocator>
     {
         [SetUp]
         public void Setup()
         {
-            ServiceLocator.Rebind<IPersonRepository>(typeof(EntityFrameworkPersonRepository));
+            ServiceLocator.Rebind<IPersonRepository>(typeof(EntityFrameworkPersonRepositoryWithContextAwareModel));
+            ServiceLocator.Register(typeof(ModelFactory));
         }
 
         [Test]
@@ -76,47 +77,5 @@ namespace DataContext.IntegrationTests
         }
     }
 
-    public class SetupAndTearDown<TServiceLocator>
-        where TServiceLocator : IServiceLocator, new()
-    {
-        protected IServiceLocator ServiceLocator { get; private set; }
-
-        protected CurrentContext CurrentContext { get; private set; }       
-
-        public SetupAndTearDown()
-        {
-            ServiceLocator = new TServiceLocator();
-        }
-            
-        [SetUp]
-        public void Setup()
-        {           
-            CreateAndRebindContext();
-        }
-
-        private void CreateAndRebindContext()
-        {
-            using (var entities = new DataContextModelContainer())
-            {
-                var currentContext = new Context();
-                currentContext.Name = string.Format("Testcontext {0:u}", DateTime.UtcNow);
-                currentContext.IsTest = true;
-                currentContext.DateCreated = DateTime.Now;
-
-                entities.Contexts.AddObject(currentContext);
-
-                entities.SaveChanges();
-
-                var context = new CurrentContext(currentContext.Id);
-
-                CurrentContext = context;
-                ServiceLocator.RebindToConstant(context);
-            }
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-        }
-    }
+   
 }

@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PersonRepositoryWithContextAwareModelTests.cs" />
     <Compile Include="PersonRepositoryTests.cs" />
     <Compile Include="FirstTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
