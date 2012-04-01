@@ -22,7 +22,32 @@ namespace DataContext.Core
 
                 return people.ToList();
             }
-        }       
+        }
+
+        public List<Person> WithLastName(string lastname)
+        {
+            using (var model = new DataContextModelContainer())
+            {
+                var people = from p in model.People
+                             where p.LastName == lastname && p.ContextId == context.Id
+                             select p;
+
+                return people.ToList();
+            }
+        }
+
+        public List<Person> WithName(string name)
+        {
+            using (var model = new DataContextModelContainer())
+            {
+                var people = from p in model.People
+                             where name == p.FirstName + " " + p.LastName
+                             && p.ContextId == context.Id
+                             select p;
+
+                return people.ToList();
+            }
+        }
 
         public void Save(Person person)
         {

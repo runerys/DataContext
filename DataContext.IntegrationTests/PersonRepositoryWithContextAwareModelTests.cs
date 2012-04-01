@@ -5,6 +5,8 @@ using NUnit.Framework;
 
 namespace DataContext.IntegrationTests
 {
+    using DataContext.Core.ContextAware;
+
     [TestFixture]
     public class PersonRepositoryWithContextAwareModelTests : SetupAndTearDown<ServiceLocator>
     {
@@ -71,6 +73,40 @@ namespace DataContext.IntegrationTests
             persons.Save(person);
 
             var people = persons.WithFirstName("Rune");
+
+            Assert.AreEqual(1, people.Count());
+            Assert.AreEqual("Rystad", people.First().LastName);
+        }
+
+        [Test]
+        public void GivenEmptyContext_WhenCreatingANewPersonAndSearchingByLastname_IsAbleToFindHim()
+        {
+            var persons = ServiceLocator.Resolve<IPersonRepository>();
+
+            var person = new Person();
+            person.FirstName = "Rune";
+            person.LastName = "Rystad";
+
+            persons.Save(person);
+
+            var people = persons.WithLastName("Rystad");
+
+            Assert.AreEqual(1, people.Count());
+            Assert.AreEqual("Rystad", people.First().LastName);
+        }
+
+        [Test]
+        public void GivenEmptyContext_WhenCreatingANewPersonAndSearchingByFullname_IsAbleToFindHim()
+        {
+            var persons = ServiceLocator.Resolve<IPersonRepository>();
+
+            var person = new Person();
+            person.FirstName = "Rune";
+            person.LastName = "Rystad";
+
+            persons.Save(person);
+
+            var people = persons.WithName("Rune Rystad");
 
             Assert.AreEqual(1, people.Count());
             Assert.AreEqual("Rystad", people.First().LastName);

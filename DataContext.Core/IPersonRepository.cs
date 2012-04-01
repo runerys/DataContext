@@ -6,6 +6,10 @@ namespace DataContext.Core
     {
         List<Person> WithFirstName(string firstname);
 
+        List<Person> WithLastName(string lastname);
+
+        List<Person> WithName(string name);
+
         void Save(Person person);
     }
 }
